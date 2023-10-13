@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head >
+    <meta charset="utf-8"/>
+    <title>Calculadora de Enlaces Outdoor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Enlaces Outdoor</h1>
+        <label for="calculo-selecionado">Escolha um cálculo:</label>
+        <select id="calculo-selecionado">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option value="capacidade-canal">Capacidade Máxima de Canal(Shannon)</option>
+            <option value="taxa-nyquist">Taxa de Nyquist</option>
+            <option value="mw-dbm">Conversão de mW para dBm</option>
+            <option value="dbm-mw">Conversão de dBm para mW</option>
+            <option value="eirp">EIRP (Effective Isotropic Radiated Power)</option>
+            <option value="fslp">FSLP (Free Space Loss Path)</option>
+            <option value="rsl">RSL (Received Signal Level)</option>
+            <option value="fresnel-zone">Fresnel Zone</option>
+        </select>
+        <form id="calculator-form">
+            <div id="inputs">
+                <!-- Campos de entrada específicos para cada cálculo serão adicionados aqui via JavaScript -->
+            </div>
+            <button type="button" id="calcular">Calcular</button>
+        </form>
+        <div id="resultado" style="display: none;">
+            <h2>Resultado</h2>
+            <p id="formula-text"></p>
+            <span id="resultado-text"></span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
