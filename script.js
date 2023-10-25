@@ -87,8 +87,8 @@ document.getElementById('calcular').addEventListener('click', function() {
     if (selectedCalculation === 'capacidade-canal') {
         const larguraBanda = parseFloat(document.getElementById('largura-banda').value);
         const snrDb = parseFloat(document.getElementById('snr-db').value);
-        const capacidadeCanal = larguraBanda * Math.log2(1 + snrDb);
-        const formula = `Capacidade Máxima de Canal (Shannon): Capacidade (bps) = ${larguraBanda} Hz * log2(1 + ${snrDb} dB)`;
+        const capacidadeCanal = larguraBanda * Math.log2(1 + Math.pow(10, snrDb / 10));
+        const formula = `Capacidade Máxima de Canal (Shannon): Capacidade (bps) = ${larguraBanda}Hz * log2(1 + 10^(${snrDb}dB /10)`;
         formulaText.textContent = formula;
         document.getElementById('resultado-text').textContent = `Resultado: ${capacidadeCanal} bps`;
     } else if (selectedCalculation === 'taxa-nyquist') {
@@ -148,9 +148,18 @@ document.getElementById('calcular').addEventListener('click', function() {
         const frequencia = parseFloat(document.getElementById('frequencia').value);
         const distanciaRestoObjeto = distanciaTotal - distanciaObjeto;
         const fresnel = 550 * Math.sqrt((distanciaObjeto * distanciaRestoObjeto) / (distanciaTotal * frequencia));
-        const formula = `Fresnel Zone: Raio da zona de Fresnel (m) = 550 * √(${distanciaObjeto} * ${distanciaRestoObjeto} / ( ${distanciaTotal} * ${frequencia} ))`;
-        formulaText.textContent = formula;
-        document.getElementById('resultado-text').textContent = `Resultado: ${fresnel} m`;
+        const formula = `Raio da zona de Fresnel (m) = 550 * √(${distanciaObjeto} * ${distanciaRestoObjeto}) / ( ${distanciaTotal} * ${frequencia} ))`;
+        
+        if (frequencia < 3000) {
+            const percMin = fresnel * 0.6;
+            const formMin = `\\n${fresnel.toFixed(2)} * 0,6`;
+            formMinForm = formMin.replace(/\\n/g, '\n');
+            formulaText.textContent = formula + formMinForm;
+            document.getElementById('resultado-text').textCfiontent = `Resultado: ${fresnel.toFixed(2)} m; Raio com aplicação do percentual mínimo: ${percMin.toFixed(2)} m`;
+        }else{
+            formulaText.textContent = formula;
+            document.getElementById('resultado-text').textContent = `Resultado: ${fresnel.toFixed(2)} m`;
+        }
     }
 
     // Exiba o resultado
