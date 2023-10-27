@@ -83,7 +83,8 @@ document.getElementById('calcular').addEventListener('click', function() {
     const selectedCalculation = document.getElementById('calculo-selecionado').value;
     const inputs = document.getElementById('inputs');
     const formulaText = document.getElementById('formula-text');
-
+    formulaText.textContent = "";
+    document.getElementById("resultado-text").textContent = "";
     if (selectedCalculation === 'capacidade-canal') {
         const larguraBanda = parseFloat(document.getElementById('largura-banda').value);
         const snrDb = parseFloat(document.getElementById('snr-db').value);
@@ -148,16 +149,18 @@ document.getElementById('calcular').addEventListener('click', function() {
         const frequencia = parseFloat(document.getElementById('frequencia').value);
         const distanciaRestoObjeto = distanciaTotal - distanciaObjeto;
         const fresnel = 550 * Math.sqrt((distanciaObjeto * distanciaRestoObjeto) / (distanciaTotal * frequencia));
-        const formula = `Raio da zona de Fresnel (m) = 550 * √(${distanciaObjeto} * ${distanciaRestoObjeto}) / ( ${distanciaTotal} * ${frequencia} ))`;
+        const formula = `Raio da zona de Fresnel (m) =\r\n 550 * √((${distanciaObjeto} * ${distanciaRestoObjeto}) / ( ${distanciaTotal} * ${frequencia} ))`;
         
         if (frequencia < 3000) {
             const percMin = fresnel * 0.6;
-            const formMin = `\\n${fresnel.toFixed(2)} * 0,6`;
-            formMinForm = formMin.replace(/\\n/g, '\n');
-            formulaText.textContent = formula + formMinForm;
-            document.getElementById('resultado-text').textCfiontent = `Resultado: ${fresnel.toFixed(2)} m; Raio com aplicação do percentual mínimo: ${percMin.toFixed(2)} m`;
+            const formMin = ` = ${fresnel.toFixed(2)} * 0,6`;
+            formulaText.textContent = formula + formMin;
+            // formulaText.insertAdjacentHTML("afterend",formula + formMin);
+            document.getElementById('resultado-text').textContent = `Resultado: ${fresnel.toFixed(2)} m;\r\nRaio com aplicação do percentual mínimo: ${percMin.toFixed(2)} m.`;
+            // document.getElementById('resultado-text').insertAdjacentHTML("afterend",`Resultado: ${fresnel.toFixed(2)} m;<br>Raio com aplicação do percentual mínimo: ${percMin.toFixed(2)} m.`);
         }else{
             formulaText.textContent = formula;
+            // formulaText.insertAdjacentHTML("afterend",formula);
             document.getElementById('resultado-text').textContent = `Resultado: ${fresnel.toFixed(2)} m`;
         }
     }
